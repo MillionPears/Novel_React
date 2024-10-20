@@ -9,14 +9,14 @@ function LoginForm() {
   const [password, setPassword] = useState<string>('')
   const [rePassword, setRePassword] = useState<string>('')
   const [isRegistering, setIsRegistering] = useState<boolean>(false)
-  const { handlelogin } = useAuth()
+  const { handlelogin, handleRegister } = useAuth()
 
   const handleRegisterClick = (e: React.FormEvent) => {
     e.preventDefault()
-    // if (password === rePassword) {
-    //   localStorage.setItem('showPopup', 'register')
-    //   handleRegister(email, password)
-    // }
+    if (password === rePassword) {
+      localStorage.setItem('showPopup', 'register')
+      handleRegister(email, password)
+    }
   }
 
   const handleLoginClick = () => {
@@ -27,11 +27,11 @@ function LoginForm() {
     <div className='w-[100vw] h-[100vh] flex items-center justify-center'>
       <ToastContainer></ToastContainer>
       <div className=' sm:w-full sm:max-w-sm'>
-        {/* <div className='mb-4'>
+        <div className='mb-4'>
           <Link to={'/'}>
             <img className='mx-auto h-30 w-40' src={Logo} alt='Workflow' />
           </Link>
-        </div> */}
+        </div>
 
         <form className='' onSubmit={handleRegisterClick}>
           <div className='text-gray_text'>

@@ -10,13 +10,13 @@ import history from "../router/history"
 export const  useAuth = ()=>{
      const dispatch = useAppDispatch()
     
-    useEffect(()=>{
-    },[])
+    
 
     const handlelogin = async (email: string, password: string) => {
         try {
             const response = await authApiRequest.login(email,password)
             const data = response.data
+            console.log("haha",response.data)
             const accessToken = data.accessToken
 
             localStorage.setItem('accessToken', accessToken)
@@ -34,7 +34,20 @@ export const  useAuth = ()=>{
             dispatch(loadUserFail())
         }
     }
-
+    const handleRegister = async (email: string, password: string) => {
+        try {
+            const response = await authApiRequest.register(
+                email,
+                password
+            )
+            if (response.data) {
+                handlelogin(email, password)
+            }
+        } catch (error: any) {
+            actionNotification(error?.response?.data?.message, 'error')
+            
+        }
+    }
     const loadUser = async() => {
         try {
             const res = await authApiRequest.getUser()
@@ -49,6 +62,6 @@ export const  useAuth = ()=>{
     }
 
     return { handlelogin,
-       
+       handleRegister,
         loadUser}
 }

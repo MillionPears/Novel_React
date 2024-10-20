@@ -4,7 +4,7 @@ import http from "../untils/axiosInstance"
 const novelApiRequest = {
     getNovelIdbyNovelName: async (tiltle: string) =>{
         const response = await http.get<any>(
-            `novel/novel/getIdByName`,
+            `novel/getIdByName`,
             {tiltle}
         );
         return response
@@ -39,8 +39,7 @@ const novelApiRequest = {
     },
     getPosterNovels: async (posterId:any) =>{
         const response = await http.get<any>(
-            `/novel/me/${posterId}`,
-            {posterId}
+            `/novel/me/${posterId}`
         );
         return response
     },
@@ -53,20 +52,19 @@ const novelApiRequest = {
     },
     getNovelsDetail: async (novelId: number) =>{
         const response = await http.get<any>(
-            `/novel/${novelId}`,
-            {novelId}
+            `/novel/${novelId}`
             
         );
         return response
     },
-    getNovelsInfor: async (novelId: number) =>{
-        const response = await http.get<any>(
-            `/novel/id/${novelId}`,
-            {novelId}
+    // getNovelsInfor: async (novelId: number) =>{
+    //     const response = await http.get<any>(
+    //         `/novel/id/${novelId}`,
+    //         {novelId}
             
-        );
-        return response
-    },
+    //     );
+    //     return response
+    // },
     getLastNovels: async () =>{
         const response = await http.get<any>(
             `/novel/getLast`,
@@ -76,8 +74,7 @@ const novelApiRequest = {
     },
     getListNovels: async ({ type, id }: LoaddingListProps) =>{
         const response = await http.get<any>(
-            `/novel/${type}/${id}`,
-            { type, id }
+            `/novel/${type}/${id}`
         );
         return response
     },
@@ -97,6 +94,39 @@ const novelApiRequest = {
     getMostFollowNovels: async () =>{
         const response = await http.get<any>(
             `/novel/follow/6`
+        );
+        return response
+    },
+    uploadNovelImage: async(data: {novelId: number|undefined, image: string})=>{
+         const response = await http.put<any>(
+            `/novel/image`,
+            data
+        );
+        return response
+    },
+    updateNovelState: async(novelId: number, state: string)=>{
+         const response = await http.put<any>(
+            `/novel/state/${novelId}`,
+            {state}
+        );
+        return response
+    },
+    deleteNovel: async(novelId: number, userId: number)=>{
+         const response = await http.delete<any>(
+            `/novel/${novelId}`,
+            {userId}
+        );
+        return response
+    },
+    getByTypeName: async (type:string, id:string) =>{
+        const response = await http.get<any>(
+            `/${type}/name/${id}`
+        );
+        return response
+    },
+    getByAuthName: async ( id:string) =>{
+        const response = await http.get<any>(
+            `/auth/name/${id}`
         );
         return response
     },

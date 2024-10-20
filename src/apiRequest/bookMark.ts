@@ -19,15 +19,13 @@ const bookMarkApiRequest ={
     },
     delete: async(id:number) => {
         const response = await http.delete<any>(
-            `/bookmark/delete/${id}`,
-            {id}
+            `/bookmark/delete/${id}`
         );
         return response;
     },
     getAll: async(userId:number) =>{
         const response = await http.get<any>(
-            `/bookmark/all/${userId}`,
-            {userId}
+            `/bookmark/all/${userId}`
         );
         return response
     }

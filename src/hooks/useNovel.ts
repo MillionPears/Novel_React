@@ -169,29 +169,29 @@ export const useNovelDetails = (novelId: number) => {
 };
 
 
-export const useNovelInfor = (novelId: number) => {
-    const [novelInfor, setNovelInfor] = useState<INovelI>();
-    const [loadingInfor, setLoading] = useState(true);
-    const [errorInfor, setError] = useState<string | null>(null);
-    useEffect(() => {
-        const fetchMyPublishedNovels = async () => {
-            try {
-                const response = await novelApiRequest.getNovelsInfor(novelId);
-                setNovelInfor(response.data);
-                console.log(novelInfor)
-                setLoading(false)
-            } catch (error: any) {
-                setError(error.message || 'An error occurred');
-            } finally {
-                setLoading(false);
-            }
-        };
+// export const useNovelInfor = (novelId: number) => {
+//     const [novelInfor, setNovelInfor] = useState<INovelI>();
+//     const [loadingInfor, setLoading] = useState(true);
+//     const [errorInfor, setError] = useState<string | null>(null);
+//     useEffect(() => {
+//         const fetchMyPublishedNovels = async () => {
+//             try {
+//                 const response = await novelApiRequest.getNovelsInfor(novelId);
+//                 setNovelInfor(response.data);
+//                 console.log(novelInfor)
+//                 setLoading(false)
+//             } catch (error: any) {
+//                 setError(error.message || 'An error occurred');
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
 
-        fetchMyPublishedNovels();
-    }, []);
+//         fetchMyPublishedNovels();
+//     }, []);
 
-    return { novelInfor, loadingInfor, errorInfor };
-};
+//     return { novelInfor, loadingInfor, errorInfor };
+// };
 
 export const useLastNovels = () => {
     const [novelsLast, setNovelInfor] = useState<NovelFeedCardProps[]>([]);

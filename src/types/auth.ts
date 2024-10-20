@@ -10,3 +10,17 @@ export interface User {
     createAt: string,
     rolesId: number[]
 }
+export interface avatarUpdate {
+    id: string
+    avatar: string
+}
+export interface IUserListI {
+    id: number;
+    username: string;
+    email: string;
+    birthday: Date;
+    gender: number;
+    blacklist: boolean;
+    confirmed: boolean;
+    createdAt: Date;
+}

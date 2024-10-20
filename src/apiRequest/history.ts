@@ -10,15 +10,13 @@ const historyApiRequest ={
     },
     getHistoryUser: async(userId: number) => {
         const response = await http.get<any>(
-            `/history/${userId}`,
-            {userId}
+            `/history/${userId}`
         );
         return response
     },
     deleteHistory: async(id: number) => {
         const response = await http.delete<any>(
-            `/history/remove/${id}`,
-            {id}
+            `/history/remove/${id}`
         );
         return response
     },

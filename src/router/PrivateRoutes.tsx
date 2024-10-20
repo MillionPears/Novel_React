@@ -1,9 +1,8 @@
-import Loading from '@/components/Loading'
-
 import { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 import { RootState } from '../store/store'
+import Loading from '../components/Loading'
 
 const PrivateRoutes = () => {
   const auth = useSelector((state: RootState) => state.auth)

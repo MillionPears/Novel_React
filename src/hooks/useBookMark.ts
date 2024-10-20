@@ -40,6 +40,8 @@ export function useBookmark(novelId: number) {
         fetchCheckBookmark();
     }, [novelId, user]);
 
+    
+    
     const addBookmark = async () => {
         try {
             if (user) {
@@ -65,7 +67,7 @@ export default function useGetBookmark() {
     const user = useSelector((state: RootState) => state.auth.user);
     const [loading, setLoading] = useState(true);
     const [bookmark, setBookmark] = useState<NovelBookMark[]>([]);
-
+    const [error, setError] = useState<string | null>(null);
     const getAllBookMark = async () => {
         if (!user) return;
 
@@ -88,5 +90,5 @@ export default function useGetBookmark() {
         await removeBookmark(bookmarkId, getAllBookMark); // Sử dụng hàm removeBookmark chung
     };
 
-    return { bookmark, loading, refetch: getAllBookMark, removeBookmark: removeBookmarkFromList };
+    return { bookmark, loading,error, refetch: getAllBookMark, removeBookmark: removeBookmarkFromList };
 }

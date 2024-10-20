@@ -3,15 +3,14 @@ import http from "../untils/axiosInstance"
 const notificationApiRequest={
     getNotificatonOfUser: async (userId:number) =>{
         const response = await http.get<any>(
-            `/notification/${userId}`,
-            {userId}
+            `/notification/${userId}`
         );
         return response
     },
     updateStateIsSeen: async (userId:number) =>{
         const response = await http.post<any>(
             `/notification/${userId}`,
-            {userId}
+            null
         );
         return response
     },

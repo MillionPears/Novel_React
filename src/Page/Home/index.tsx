@@ -1,77 +1,68 @@
-import React from 'react'
+import { useMostFollowNovels } from '../../hooks/useNovel'
 
-import { useSelector } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { TbReload } from 'react-icons/tb'
-import Banner from '../../components/Banner'
-import NewFeed from '../../components/Home/NewFeed'
-import HistoryCard from '../../components/Card/HistoryCard'
-import NovelCard from '../../components/Card/NovelCard'
-import { RootState } from '../../store/store'
-import { useMostFollowNovels, useRandomNovels } from '../../hooks/useNovel'
-import { ICardNovelsI } from '../../types/novel'
+import { faCircleChevronLeft, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
 // Import component placeholder
 
 function HomePage() {
-  const { randomNovels, loading, error, refetch } = useRandomNovels()
   const { FollowNovels } = useMostFollowNovels()
-  const auth = useSelector((state: RootState) => state.auth)
-
-  // if (loading) return <LoadingPlaceholder />; // Show loading placeholder
-  // if (error) return <div>Error: {error}</div>;
-
-  function handlerReloadRandomNovel(): void {
-    refetch()
+  const [currentNovelIndex, setCurrentNovelIndex] = useState(0)
+  // Hàm để điều chỉnh chỉ số của tiểu thuyết hiện tại
+  const nextNovel = () => {
+    setCurrentNovelIndex((prevIndex) => (prevIndex + 1) % FollowNovels.length)
   }
 
+  const prevNovel = () => {
+    setCurrentNovelIndex((prevIndex) => (prevIndex - 1 + FollowNovels.length) % FollowNovels.length)
+  }
   return (
-    <div className='bg-[#FCFCFA]'>
-      <Banner />
-      <ToastContainer />
-      <div className='md:container'>
-        {auth.isLogin ? (
-          <div>
-            <p className='text-base text-theme_color font-semibold py-4 mx-2'>TRUYỆN VỪA ĐỌC</p>
-            <HistoryCard />
+    // Main div
+    <div className=''>
+      {/* Out Now & Banner */}
+      <div className='flex-col '>
+        {/* Out now  */}
+        <div className='flex justify-between items-center h-10 pb-4 '>
+          {/* Tạo hàng với Out Now, ngôi sao, mũi tên trái và mũi tên phải */}
+          <div className='flex items-center'>
+            <div className='text-sky_blue text-xl font-semibold'>Out Now</div>
+            <FontAwesomeIcon
+              icon={faStar}
+              rotation={90}
+              style={{ color: '#74C0FC', marginLeft: '8px', fontSize: '1.5rem' }}
+            />
           </div>
-        ) : (
-          <div />
-        )}
-
-        <div>
-          <p className='text-base text-theme_color font-semibold py-4 mx-2'>BTV ĐỀ CỬ</p>
-          <div>
-            <div className='flex gap-10 flex-wrap'>
-              {FollowNovels.map((item: ICardNovelsI, index: number) => (
-                <NovelCard item={item} key={index.toString()} />
-              ))}
+          <div className='flex items-center'>
+            <FontAwesomeIcon
+              icon={faCircleChevronLeft}
+              style={{ color: '#74C0FC', marginRight: '16px', fontSize: '1.5rem' }}
+            />
+            <FontAwesomeIcon icon={faCircleChevronRight} style={{ color: '#74C0FC', fontSize: '1.5rem' }} />
+          </div>
+        </div>
+        {/* Banner */}
+        <div className=''>
+          {FollowNovels.length > 0 && (
+            <div className='flex items-center space-x-4'>
+              {' '}
+              {/* Sử dụng flex để căn chỉnh ảnh và văn bản */}
+              {/* Hiển thị ảnh bìa của novel */}
+              <img
+                src={FollowNovels[currentNovelIndex].banner} // Đường dẫn đến hình ảnh bìa
+                alt={FollowNovels[currentNovelIndex].title} // Văn bản thay thế cho ảnh
+                className='w-32 h-48 object-cover rounded' // Các lớp Tailwind CSS để điều chỉnh kích thước và kiểu dáng ảnh
+              />
+              {/* Hiển thị tiêu đề và mô tả của novel */}
+              <div>
+                <h2 className='text-xl font-semibold'>{FollowNovels[currentNovelIndex].title}</h2>
+                <p className='text-gray-600'>{FollowNovels[currentNovelIndex].description}</p>
+                {/* Thêm bất kỳ thông tin nào khác về novel mà bạn muốn hiển thị */}
+              </div>
             </div>
-          </div>
+          )}
         </div>
-      </div>
-      <div className='my-10'>
-        <Banner />
-      </div>
-      <div className='md:container mx-2'>
-        <div className='flex py-4'>
-          <p className='text-base font-semibold text-theme_color border-r-[1px] border-r-solid border-r-[#e1e1e1] pe-2'>
-            TRUYỆN NGẪU NHIÊN
-          </p>
-          <div className='text-sky_blue_light hover:text-sky_blue mx-2'>
-            <TbReload size={24} onClick={handlerReloadRandomNovel} />
-          </div>
-        </div>
-        <div>
-          <div className='my-2'>
-            <div className='flex gap-10 flex-wrap'>
-              {randomNovels.map((item: ICardNovelsI, index: number) => (
-                <NovelCard item={item} key={index.toString()} />
-              ))}
-            </div>
-          </div>
-        </div>
-        <NewFeed />
       </div>
     </div>
   )

@@ -5,3 +5,4 @@ export interface IAuthorI {
     nickname: string,
     novelCount: number
 }
+
